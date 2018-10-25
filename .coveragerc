@@ -1,0 +1,10 @@
+[run]
+branch = True
+
+[report]
+exclude_lines = 
+     pragma: no cover
+
+     raise NotImplementedError
+
+ignore_errors = True

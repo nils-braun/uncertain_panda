@@ -1,0 +1,12 @@
+[build-system]
+requires = ["flit"]
+build-backend = "flit.buildapi"
+
+[tool.flit.metadata]
+module = "uncertain_panda"
+author = "Nils Braun"
+author-email = "nils.braun@kit.edu"
+home-page = "https://github.com/nils-braun/uncertain_panda"
+classifiers = ["License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)"]
+
+requires=['pandas', 'uncertainties', 'dask']

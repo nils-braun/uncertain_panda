@@ -1,0 +1,11 @@
+language: python
+python:
+  - "3.6"
+install:
+  - pip install flit 
+  - pip install -U pytest pytest-cov python-coveralls
+  - flit install -s
+script:
+  - pytest -v --cov uncertain_panda --cov-report term-missing
+after_success:
+  - coveralls
