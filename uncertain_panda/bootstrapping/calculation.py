@@ -1,8 +1,13 @@
 import enum
+import warnings
 
 import pandas as pd
 import numpy as np
-from uncertainties import ufloat
+
+
+with warnings.catch_warnings():
+    warnings.simplefilter("ignore")
+    from uncertainties import ufloat
 
 from .bootstrapper import bootstrap
 
