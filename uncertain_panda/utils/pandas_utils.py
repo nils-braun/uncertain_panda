@@ -7,6 +7,7 @@ def band(x, cl=0.9):
                       "median": x.median()
                       })
 
+
 def value_counts_with_uncertainty(series, normalize=False):
     possible_values = set(series)
 
@@ -21,3 +22,10 @@ def value_counts_with_uncertainty(series, normalize=False):
 
     return pd.Series(count, index=pd.CategoricalIndex(possible_values))
 
+
+def groupbycut(df, variable, bins):
+    tmp = df.copy()
+    if isinstance(variable, str):
+        variable = df[variable]
+    tmp["bins"] = to_numeric(cut(variable, bins).apply(lambda x: x.mid))
+    return tmp.groupby("bins")
