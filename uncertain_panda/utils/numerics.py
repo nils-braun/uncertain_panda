@@ -20,3 +20,7 @@ def coverage(series, cl=0.68):
     centered_dist = np.abs(series - np.median(series))
     b = np.percentile(centered_dist, 100*cl)
     return b
+
+
+def calculate_binomial_uncertainty(k, n):
+    return np.sqrt((k + 1) * (k + 2) / (n + 2) / (n + 3) - (k + 1) ** 2 / (n + 2) ** 2)

@@ -1,3 +1,5 @@
+import pandas
+
 from dask import array as da
 
 
@@ -26,24 +28,37 @@ class LambdaFunction(Function):
         return self._lambda_function(df, *args, **kwargs)
 
 
+class PandasFunction(Function):
+    def __init__(self, key):
+        self._key = key
+
+    def __call__(self, df, *args, **kwargs):
+        return getattr(df, self._key)(*args, **kwargs)
+
+    def call_on_dask_array(self, random_draws, *args, **kwargs):
+        try:
+            return getattr(da, self._key)(random_draws, *args, axis=1, **kwargs)
+        except AttributeError:
+            raise AttributeError(f"Using {self._key} is not supported in dask mode. Please switch to pandas instead!")
+
+
 class NumpyFunction(Function):
-    def __init__(self, numpy_name, **kwargs):
+    def __init__(self, numpy_name):
         self._numpy_name = numpy_name
-        self.kwargs = kwargs
 
     @property
     def key(self):
         return self._numpy_name
 
     def __call__(self, df, *args, **kwargs):
-        return df.agg(self._numpy_name, *args, **self.kwargs, **kwargs)
+        return df.agg(self._numpy_name, *args, **kwargs)
 
     def call_on_dask_array(self, random_draws, *args, **kwargs):
         # For numpy functions we can cheat a bit here, as using the internal dask function is much faster
-        return getattr(da, self._numpy_name)(random_draws, *args, axis=1, **self.kwargs, **kwargs)
+        return getattr(da, self._numpy_name)(random_draws, *args, axis=1, **kwargs)
 
 
 class NonNanNumpyFunction(NumpyFunction):
     def call_on_dask_array(self, random_draws, *args, **kwargs):
         # for numpy functions we can cheat a bit here, as using the internal dask function is much faster
-        return getattr(da, "nan" + self._numpy_name)(random_draws, *args, axis=1, **self.kwargs, **kwargs)
+        return getattr(da, "nan" + self._numpy_name)(random_draws, *args, axis=1, **kwargs)

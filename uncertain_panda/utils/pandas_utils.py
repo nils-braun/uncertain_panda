@@ -7,17 +7,3 @@ def band(x, cl=0.9):
                       "median": x.median()
                       })
 
-def value_counts_with_uncertainty(series, normalize=False):
-    possible_values = set(series)
-
-    normalization = len(series)
-    if normalize:
-        normalization = 1
-
-    count = {
-        val: (series == val).mean_with_uncertainty() * normalization
-        for val in possible_values
-    }
-
-    return pd.Series(count, index=pd.CategoricalIndex(possible_values))
-
