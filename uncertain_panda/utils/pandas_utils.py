@@ -53,14 +53,25 @@ class UncertaintyDataFrameAccessor(object):
         return wrapped_function
 
 
-# from uncertain_panda.utils.pandas_utils import band
+def safe_nominal_value(y):
+    try:
+        return y.nominal_value
+    except AttributeError:
+        return y
+
+
+def safe_std_dev(y):
+    try:
+        return y.std_dev
+    except AttributeError:
+        return y
 
 
 def _add_basic_methods(core_object):
     core_object.coverage = pandas_coverage
 
-    core_object.nominal_value = property(lambda x: x.apply(lambda y: y.nominal_value))
-    core_object.std_dev = property(lambda x: x.apply(lambda y: y.std_dev))
+    core_object.nominal_value = property(lambda x: x.apply(lambda y: safe_nominal_value(y)))
+    core_object.std_dev = property(lambda x: x.apply(lambda y: safe_std_dev(y)))
 
     core_object.plot_with_uncertainty = plot_with_uncertainty
     # core_object.band = band
@@ -87,4 +98,5 @@ def add_uncertainty_accessors():
         wrapped_name = "unc_asym"
 
     pd.core.groupby.DataFrameGroupBy.unc = pd.core.accessor.CachedAccessor("unc", SymmetricUncertaintyDataFrameAccessor)
-    pd.core.groupby.DataFrameGroupBy.unc_asym = pd.core.accessor.CachedAccessor("unc_asym", AsymmetricUncertaintyDataFrameAccessor)
+    pd.core.groupby.DataFrameGroupBy.unc_asym = pd.core.accessor.CachedAccessor("unc_asym",
+                                                                                AsymmetricUncertaintyDataFrameAccessor)
