@@ -1,5 +1,10 @@
-uncertain_panda
-===============
+.. uncertain_panda documentation master file, created by
+   sphinx-quickstart on Sun Nov 11 22:22:52 2018.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+The uncertain panda
+===================
 
 ``uncertain_panda`` helps you with constructing uncertainties of quantities calculated on your ``pandas`` data frames,
 by applying the method of bootstrapping.
@@ -12,6 +17,16 @@ by applying the method of bootstrapping.
            :target: https://coveralls.io/github/nils-braun/uncertain_panda?branch=master
 .. image:: https://travis-ci.org/nils-braun/uncertain_panda.svg?branch=master
            :target: https://travis-ci.org/nils-braun/uncertain_panda
+
+Content
+-------
+
+.. toctree::
+    :maxdepth: 2
+
+    pages/examples
+    pages/bootstrapping
+    pages/api
 
 
 Why is the panda uncertain?
@@ -56,9 +71,11 @@ results as if they were normal numbers in your calculations.
 
 .. code-block:: python
 
-    series.unc.mean() + 2* series.unc.std()
+    series.unc.mean() + 2 * series.unc.std()
 
 Super easy!
+
+You can find some more examples in :ref:`examples`.
 
 Comparison in A/B testing
 .........................
@@ -99,7 +116,14 @@ Here is a list of already implemented features
     In the background, it used the method of bootstrapping (see below) to calculate
     the uncertainties.
 
-*   Possibility to calculate asymmetric or symmetric uncertainties, with ``unc`` or ``unc_asym``.
+*   Calculate confidence intervals (instead of symmetric one-sigma uncertainties)
+    or get back the basic bootstrapping distribution with
+
+    .. code-block:: python
+
+      df.unc.mean().bs()  # for the bootstrap distribution
+      df.unc.mean().ci(0.3, 0.8)  # for the confidence interval between 0.3 and 0.8
+
 *   Opional usage of ``dask`` for large data samples.
     Enable it with
 
@@ -130,27 +154,17 @@ How does it work?
 -----------------
 
 Under the hood, ``uncertain_panda`` is using bootstrapping for calculating the uncertainties.
-Suppose you want to calculate a quantity :math:`f(X)` on your data frame :math:`X`.
-Bootstrapping samples multiple versions :math:`Y_i` of :math:`X` by drawing elements with replacement from the
-data frame with the same length the data frame itself.
-On all these :math:`Y_i`, the function :math:`f` is evaluated, creating a distribution of possible values for
-:math:`f(X)`.
-The standard deviation of this distribution is the (symmetric) uncertainty returned by ``uncertain_panda``.
-If you request the asymmetric uncertainty, the 1 sigma quantile in both directions around the median
-is returned.
-You can find some more information on bootstrapping in the net, e.g. on wikipedia_.
-
-.. _`wikipedia`: `https://en.wikipedia.org/wiki/Bootstrapping_(statistics)`
-
+Find more information on bootstrapping in :ref:`bootstrapping`.
 
 Other packages
 --------------
 
-There are probably plenty of packages out there for this job - but the only known one
-I am aware of is the `bootstrapped`_ package.
+There are probably plenty of packages out there for this job, that I am not aware of.
+The best known is probably the `bootstrapped`_ package.
 Compared to this package, ``uncertain_panda`` tries to automate the quantity calculation
-and works for arbitrary functions as well can use ``dask`` for the calculation.
-``bootstrapped`` is very nice for sparse arrays, which is not (yet) implemented in
+and works for arbitrary functions.
+Also, it can use ``dask`` for the calculation.
+``bootstrapped`` on the other hand is very nice for sparse arrays, which is not (yet) implemented in
 ``uncertain_panda``.
 
 .. _`bootstrapped`: https://github.com/facebookincubator/bootstrapped
