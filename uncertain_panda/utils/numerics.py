@@ -31,7 +31,7 @@ def coverage(series, cl=0.68):
     series = series[~np.isnan(series)]
 
     if len(series) == 0:
-        return np.NAN
+        return np.NAN  # pragma: no cover
 
     centered_dist = np.abs(series - np.median(series))
     b = np.percentile(centered_dist, 100 * cl)
