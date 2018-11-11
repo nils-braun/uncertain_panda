@@ -21,8 +21,8 @@ Did you ever wondered if the difference in the average of two methods is signifi
 
 Then you want to have an uncertain panda!
 
-`uncertain_panda` helps you calculate uncertainties on arbitrary quantities related to your pandas data frame
-e.g. `mean`, `median`, `quantile` or `min`/`max` and every other arbitrary function on pandas data frames!
+``uncertain_panda`` helps you calculate uncertainties on arbitrary quantities related to your pandas data frame
+e.g. ``mean``, ``median``, ``quantile`` or ``min``/``max`` and every other arbitrary function on pandas data frames!
 
 
 How to use it?
@@ -30,9 +30,13 @@ How to use it?
 
 First, install the package
 
+.. code-block:: bash
+
     pip install uncertain_panda
 
-Just import pandas from the `uncertain_panda` package and prefix `unc` before every calculation.
+Just import pandas from the ``uncertain_panda`` package and prefix ``unc`` before every calculation.
+
+.. code-block:: python
 
     from uncertain_panda import pandas as pd
 
@@ -57,40 +61,47 @@ Here is a list of already implemented features
 
 *   Automatic calculation of uncertainties of every built in pandas function for
 
-    * data framees
+    * data frames
     * series
     * grouped data frames
 
-    using the prefix `unc` before the function name, e.g.
+    using the prefix ``unc`` before the function name, e.g.
+
+    .. code-block:: python
 
         df.unc.mean()
 
     In the background, it used the method of bootstrapping (see below) to calculate
     the uncertainties.
 
-*   Possibility to calculate asymmetric or symmetric uncertainties, with `unc` or `unc_asym`.
+*   Possibility to calculate asymmetric or symmetric uncertainties, with ``unc`` or ``unc_asym``.
 *   Plotting functionality for uncertainties with
+
+    .. code-block:: python
 
         df.unc.mean().plot_with_uncertainties(kind="bar")
 
     for a nice error-bar plot.
-*   Full configurable bootstrapping with either using pandas built-in methods or `dask` (optionally enabled).
+*   Full configurable bootstrapping with either using pandas built-in methods or ``dask`` (optionally enabled).
     Just pass the options to your called method, e.g.
+
+    .. code-block:: python
 
         df.unc.mean(pandas=False)
 
-    to use `dask` instead of pandas for the bootstrapping.
+    to use ``dask`` instead of pandas for the bootstrapping.
 
 
 How does it work?
 -----------------
 
-Under the hood, `uncertain_panda` is using bootstrapping for calculating the uncertainties.
-Supose you want to calculate a quantity `f(X)` on your data frame `X`.
-Bootstrapping samples multiple versions `Yi` of `X` by drawing elements with replacement from the
+Under the hood, ``uncertain_panda`` is using bootstrapping for calculating the uncertainties.
+Supose you want to calculate a quantity :math:`f(X)` on your data frame :math:`X`.
+Bootstrapping samples multiple versions :math:`Y_i` of :math:`X` by drawing elements with replacement from the
 data frame with the same length the data frame itself.
-On all these `Yi`, the function `f` is evaluated, creating a distribution of possible values for `f(X)`.
-The standard deviation of this distribution is the (symmetric) uncertainty returned by `uncertain_panda`.
+On all these :math:`Y_i`, the function :math:`f` is evaluated, creating a distribution of possible values for
+:math:`f(X)`.
+The standard deviation of this distribution is the (symmetric) uncertainty returned by ``uncertain_panda``.
 If you request the asymmetric uncertainty, the 1 sigma quantile in both directions around the median
 is returned.
 You can find some more information on bootstrapping in the net, e.g. on wikipedia_.
