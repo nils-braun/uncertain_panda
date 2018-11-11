@@ -2,7 +2,11 @@ import enum
 
 import pandas as pd
 import numpy as np
-from uncertainties import ufloat
+import warnings
+
+with warnings.catch_warnings():
+    warnings.simplefilter("ignore")
+    from uncertainties import ufloat
 
 from ..utils.numerics import ONE_SIGMA
 from .calculators import bootstrap, calculate_binomial_uncertainty
@@ -63,5 +67,3 @@ def calculate_with_asymmetric_uncertainty(df, *args, f, mode, **kwargs):
         raise NotImplementedError(mode)
 
     return pd.Series(return_dict)
-
-

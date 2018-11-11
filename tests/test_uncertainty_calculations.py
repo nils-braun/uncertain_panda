@@ -51,13 +51,13 @@ class TestUncertaintyCalculations(UncertainPandaTestCase):
 
     def test_value_counts(self):
         df = pd.DataFrame({"a": [1] * 100 + [2] * 200 + [3] * 300,
-                           "b": ["a"] * 100 + ["b"] * 200 + ["c"] * 300})
+                           "b": [5] * 100 + [6] * 200 + [7] * 300})
 
         value_counts = df.unc.value_counts()
         self.assertEqual(value_counts.shape, (6, 2))
 
         self.assertTrue((value_counts["a"].loc[[1, 2, 3]].nominal_value == [100, 200, 300]).all())
-        self.assertTrue((value_counts["b"].loc[["a", "b", "c"]].nominal_value == [100, 200, 300]).all())
+        self.assertTrue((value_counts["b"].loc[[5, 6, 7]].nominal_value == [100, 200, 300]).all())
 
     def test_binomial_unc(self):
         df = pd.Series(np.random.choice([0, 1], size=1000, p=[0.3, 0.7]))
