@@ -2,7 +2,8 @@ language: python
 python:
   - "3.6"
 install:
-  - pip install flit 
+  - pip install flit
+  - pip install toolz dask 
   - pip install -U pytest pytest-cov python-coveralls
   - flit install -s
 script:
