@@ -1,4 +1,5 @@
 import pandas as pd
+from uncertainties import nominal_value, std_dev
 
 from uncertain_panda.uncertainties import calculate_with_asymmetric_uncertainty
 from uncertain_panda.uncertainties.calculation import calculate_with_uncertainty, UncertaintyMode
@@ -53,25 +54,11 @@ class UncertaintyDataFrameAccessor(object):
         return wrapped_function
 
 
-def safe_nominal_value(y):
-    try:
-        return y.nominal_value
-    except AttributeError:
-        return y
-
-
-def safe_std_dev(y):
-    try:
-        return y.std_dev
-    except AttributeError:
-        return y
-
-
 def _add_basic_methods(core_object):
     core_object.coverage = pandas_coverage
 
-    core_object.nominal_value = property(lambda x: x.apply(lambda y: safe_nominal_value(y)))
-    core_object.std_dev = property(lambda x: x.apply(lambda y: safe_std_dev(y)))
+    core_object.nominal_value = property(lambda x: x.apply(lambda y: nominal_value(y)))
+    core_object.std_dev = property(lambda x: x.apply(lambda y: std_dev(y)))
 
     core_object.plot_with_uncertainty = plot_with_uncertainty
     # core_object.band = band
