@@ -15,6 +15,7 @@ class TestUncertaintyCalculations(UncertainPandaTestCase):
         df = pd.DataFrame({"a": np.random.rand(N), "b": np.random.rand(N)})
         df_grouped = pd.DataFrame({"a": np.random.choice([1, 2, 3], N), "b": np.random.rand(N),
                                    "c": np.random.rand(N), "d": np.random.rand(N)}).groupby("a")
+        df_grouped_series = df_grouped.b
 
         for f in some_functions:
             result = getattr(series.unc, f)()
@@ -33,13 +34,22 @@ class TestUncertaintyCalculations(UncertainPandaTestCase):
                 self.assertEqual(result.shape, (2,))
                 self.assertIsInstance(result, pd.Series)
 
+            result = getattr(df_grouped_series.unc, f)()
+            self.assertEqual(result.shape, (3,))
+            self.assertIsInstance(result, pd.Series)
+
+            if f != "median":
+                result = getattr(df_grouped_series.unc, f)(pandas=False)
+                self.assertEqual(result.shape, (3,))
+                self.assertIsInstance(result, pd.Series)
+
             result = getattr(df_grouped.unc, f)()
-            self.assertEqual(result.shape, (3, 4))
+            self.assertEqual(result.shape, (3, 3))
             self.assertIsInstance(result, pd.DataFrame)
 
             if f != "median":
                 result = getattr(df_grouped.unc, f)(pandas=False)
-                self.assertEqual(result.shape, (3, 4))
+                self.assertEqual(result.shape, (3, 3))
                 self.assertIsInstance(result, pd.DataFrame)
 
     def test_mean(self):

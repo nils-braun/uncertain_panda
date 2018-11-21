@@ -1,2 +1,2 @@
 from .functions import LambdaFunction, NonNanNumpyFunction, PandasFunction
-from .calculation import calculate_with_uncertainty, calculate_with_asymmetric_uncertainty
+from .calculation import create_uncertainty

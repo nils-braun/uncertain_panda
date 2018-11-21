@@ -3,10 +3,10 @@ from functools import partial
 import numpy as np
 import pandas as pd
 
-ONE_SIGMA = 31.7310508
+ONE_SIGMA = 68.2689
 
 
-def pandas_coverage(df, cl=0.68):
+def pandas_coverage(df, cl=ONE_SIGMA/100):
     if isinstance(df, pd.DataFrame):
         return df.apply(partial(coverage, cl=cl))
     else:
