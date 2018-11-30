@@ -9,4 +9,4 @@ author-email = "nils.braun@kit.edu"
 home-page = "https://github.com/nils-braun/uncertain_panda"
 classifiers = ["License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)"]
 
-requires=['pandas', 'uncertainties', 'matplotlib']
+requires=['pandas>=0.23.4', 'uncertainties', 'matplotlib']
