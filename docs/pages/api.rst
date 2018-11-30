@@ -65,14 +65,30 @@ Advanced functionality
 ----------------------
 
 Actually, the return values of the uncertainty calculations are not only "bare numbers with uncertainties".
-They have a bunch of additional functionality:
+They are instances of `BootstrapResult` and have a bunch of additional functionality:
 
 .. py:currentmodule:: uncertain_panda
 .. autoclass:: BootstrapResult
+    :members:
+    :undoc-members:
 
 
 Plotting
 --------
+
+The package also adds another function to the basic pandas objects (``Series``, ``DataFrame``) to plot
+values with uncertainties correctly.
+You can call it with
+
+.. code-block:: python
+
+    df.plot_with_uncertainty()
+
+It is 1:1 equivalent to the normal call to ``plot``, so you can put in the same argument
+
+.. code-block:: python
+
+    df.plot_with_uncertainty(kind="bar", label="Something", figsize=(20, 10))
 
 
 .. _`uncertainties`: https://pythonhosted.org/uncertainties/
