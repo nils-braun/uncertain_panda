@@ -107,7 +107,7 @@ Here is a list of already implemented features
     .. code-block:: python
 
       df.unc.mean().bs()  # for the bootstrap distribution
-      df.unc.mean().ci(0.3, 0.8)  # for the confidence interval between 0.3 and 0.8
+      df.unc.mean().ci(0.3, 0.7)  # for the confidence interval between 0.3 and 0.7
 
 *   Opional usage of ``dask`` for large data samples.
     Enable it with
@@ -125,7 +125,7 @@ Here is a list of already implemented features
         df.unc.mean().plot_with_uncertainties(kind="bar")
 
     for a nice error-bar plot.
-*   Full configurable bootstrapping with either using pandas built-in methods or ``dask`` (optionally enabled).
+*   Full configurable bootstrapping.
     Just pass the options to your called method, e.g.
 
     .. code-block:: python
