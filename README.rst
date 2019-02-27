@@ -122,7 +122,7 @@ Here is a list of already implemented features
 
     .. code-block:: python
 
-        df.unc.mean().plot_with_uncertainties(kind="bar")
+        df.unc.mean().plot_with_uncertainty(kind="bar")
 
     for a nice error-bar plot.
 *   Full configurable bootstrapping.
