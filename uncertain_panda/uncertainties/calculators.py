@@ -3,6 +3,9 @@ import pandas as pd
 
 
 def bootstrap(df, *args, f, number_of_draws=250, chunks=1000, pandas=True, **kwargs):
+    if len(df) == 0:
+        return pd.Series([])
+
     if pandas:
         measurement_results = pd.Series(
             [f(df.sample(frac=1.0, replace=True), *args, **kwargs) for _ in range(number_of_draws)])
