@@ -26,7 +26,7 @@ Then you want to have an uncertain panda!
 e.g. ``mean``, ``median``, ``quantile`` or ``min``/``max`` and every other arbitrary function on pandas data frames!
 
 You can use any measured data (e.g. from A/B testing, recorded data from an experiment or any type of tabular data)
-and calculate any quantity using ``pandas`` and ``uncertain_panda`` will give you the uncertainty on this quantity.
+and calculate any quantity using ``pandas``. ``uncertain_panda`` will give you the uncertainty on this quantity in all cases.
 
 
 How to use it?
